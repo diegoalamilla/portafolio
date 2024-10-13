@@ -1,11 +1,11 @@
 export const certifications = [{
     id: 0,
-    name: 'AWS', 
+    name: 'AWS Certified Cloud Practitioner', 
     institution: 'Amazon',
     year: '2024'
 }, {
     id: 1,
-    name: 'GCP', 
+    name: 'Google Cloud Engineering Certificate', 
     institution: 'Google',
     year: '2024'
 }, {

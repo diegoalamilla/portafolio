@@ -7,7 +7,7 @@ export default function Certifications({ id, name, institution, year}){
 
     return(
         <>
-        <div className="certification" key={id}>{name} - {institution} - {year}</div>
+        <div className="certification" key={id}>{name} <br/> {institution} - {year}</div>
         </> 
     )
 }
