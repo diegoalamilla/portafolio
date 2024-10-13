@@ -1,0 +1,159 @@
+.maincontent {
+  max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+
+  
+}
+  /* Contenedor general de los proyectos */
+  .projects-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+
+h2{
+  color:  #ff0f0f;
+}
+
+/* Estilos generales */
+body, html {
+  margin: 0 auto;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  scroll-behavior: smooth
+}
+
+
+/* Hero section */
+.hero {
+  margin-top: 60px;
+  height: 100vh; /* Ocupar toda la pantalla */
+  width: 100%;
+  background-image: url(assets/background.png);
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin: 0;
+}
+
+.hero p {
+  font-size: 1.5em;
+  margin: 10px 0;
+}
+
+/* Botón de scroll-down */
+.scroll-down {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #000dff;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-down:hover {
+  background-color: #5290e8;
+  color: #fff;
+}
+
+/* Sección principal */
+.content{
+  padding: 3rem;
+  margin: 0 auto;
+  text-align: center;
+
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 98%;
+  height: 8vh;
+  background-color: #2c67b1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+.navbar-logo {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.navbar-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navbar-links a:hover {
+  color: #ddd;
+}
+
+.footer{
+  text-align: center;
+}
+@media (max-width: 768px) {
+
+  section{
+    scroll-margin-top: 170px;
+  }
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+  
+  .navbar-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar-links li {
+    display: block;
+    text-align: center;
+  }
+
+  .navbar-logo {
+    margin-bottom: 10px;
+  }
+
+  .hero{
+    background-color:#086eb3ae ;
+  }
+}
