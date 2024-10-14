@@ -4,8 +4,8 @@ export const projects = [{
     description: 'Es una plataforma web que centraliza la búsqueda de boletos para conciertos en México. Ofrece información actualizada sobre eventos, disponibilidad de boletos, y facilita el acceso a la compra, con opciones de favoritos y notificaciones personalizadas.' ,
     repo_url: 'https://github.com/CarlosMay7/Desarrollo-App-Web',
     technologies: [
-        {name: "javascript", image: "src/assets/javascript.png"},
-        {name: "php", image: "src/assets/php.png"}
+        {name: "javascript", image: "../src/assets/javascript.png"},
+        {name: "php", image: "../src/assets/php.png"}
 
     ]
 },
@@ -15,8 +15,8 @@ export const projects = [{
     description: 'Un lector de RSS que centraliza noticias de múltiples portales en un solo lugar, permitiendo a los usuarios filtrar y buscar contenido de manera eficiente.' ,
     repo_url: 'https://github.com/CarlosJCD/PrimeraEntregaOptimizacionWeb',
     technologies: [
-        {name: "javascript", image: "src/assets/javascript.png"},
-        {name: "php", image: "src/assets//php.png"}
+        {name: "javascript", image: "../src/assets/javascript.png"},
+        {name: "php", image: "../src/assets/php.png"}
 
     ]
     
@@ -28,7 +28,7 @@ export const projects = [{
     repo_url: 'https://github.com/diegoalamilla/BrokerApp',
     technologies: [
         {
-            name: "Java", image: "src/assets//java.png"
+            name: "Java", image: "../src/assets/java.png"
         }
     ]
 },
@@ -39,7 +39,7 @@ export const projects = [{
     repo_url: 'https://github.com/MiguelCastilloSanchez/TypePerfect-Aplication',
     technologies: [
         {
-            name: "Java", image: "src/assets/java.png"
+            name: "Java", image: "../src/assets/java.png"
         }
     ]
 }
