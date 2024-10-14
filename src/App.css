@@ -34,7 +34,7 @@ body, html {
   margin-top: 60px;
   height: 100vh; /* Ocupar toda la pantalla */
   width: 100%;
-  background-image: url(assets/background.png);
+  background-image: url(/background.png);
   background-position: center;
   background-size: cover;
   display: flex;
