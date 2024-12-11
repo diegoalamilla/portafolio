@@ -53,7 +53,7 @@ export const projects = [{
             name: "Java", image: "/java.png"
         },
         {
-            name: "AWS", image: "/aws.png"
+            name: "AWS", image: "/aws.jpg"
         }
     ]
 }
