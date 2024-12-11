@@ -42,5 +42,19 @@ export const projects = [{
             name: "Java", image: "/java.png"
         }
     ]
+},
+{
+    id: 4,
+    name: 'Api-Rest en AWS',
+    description: 'Una API REST que permite a los usuarios realizar operaciones CRUD en una base de datos MySQL alojada en un RDS de AWS. Incluye endpoints para obtener, crear, actualizar y eliminar registros, así como subir fotos de perfil a un S3 y manejar sesiones en una tabla en DynamoDB. Hecho en Spring-Boot y se despliega en un contenedor Docker en una instancia EC2.' ,
+    repo_url: 'https://github.com/diegoalamilla/AppRest',
+    technologies: [
+        {
+            name: "Java", image: "/java.png"
+        },
+        {
+            name: "AWS", image: "/aws.png"
+        }
+    ]
 }
 ]
