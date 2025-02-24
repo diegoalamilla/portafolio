@@ -6,6 +6,8 @@ sudo ngrok service stop
 
 git pull origin main
 
+npm run build
+
 sudo cp -r dist/* /var/www/html
 
 sudo systemctl start nginx
