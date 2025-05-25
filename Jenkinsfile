@@ -30,13 +30,13 @@ pipeline {
           // Copiar archivos con scp
           sh """
             echo 'Copiando archivos build al servidor...'
-            scp -i ${SSH_KEY} -o StrictHostKeyChecking=no -r ${FRONT_BUILD_DIR}/* ${VM_USER}@${REMOTE_HOST}:/tmp/frontend_build/
+            scp -i ${SSH_KEY} -o StrictHostKeyChecking=no -r ${FRONT_BUILD_DIR}/* ${VM_USER}@${VM_IP}:/tmp/frontend_build/
           """
 
           // Mover los archivos en el servidor a la carpeta final
           sh """
             echo 'Moviendo archivos en el servidor remoto...'
-            ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${VM_USER}@${REMOTE_HOST} '
+            ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
               mkdir -p ${REMOTE_PATH}
               rm -rf ${REMOTE_PATH}/*
               mv /tmp/frontend_build/* ${REMOTE_PATH}/
