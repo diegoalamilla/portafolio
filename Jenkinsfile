@@ -36,7 +36,7 @@ pipeline {
     
             sh '''
               echo "Moviendo archivos en el servidor remoto..."
-              sssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
+              ssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
                 REMOTE_PATH="${REMOTE_PATH:-/var/www/html}"
                 if [[ "\$REMOTE_PATH" == /var/www/html* ]]; then
                   rm -rf "\$REMOTE_PATH"/*
