@@ -26,7 +26,7 @@ pipeline {
 
     stage('Deploy Frontend') {
       steps {
-        withCredentials([file(credentialsId: 'SSH-KEY', variable: 'SSH_KEY_FILE')]) { {
+        withCredentials([file(credentialsId: 'SSH-KEY', variable: 'SSH_KEY_FILE')]) {
           // Copiar archivos con scp
           sh """
             chmod 600 $SSH_KEY_FILE
