@@ -3,11 +3,10 @@ pipeline {
 
    parameters {
     string(name: 'VM_IP', defaultValue: '', description: 'IP pública de la VM')
-    string(name: 'VM_USER', defaultValue: 'ubuntu', description: 'Usuario SSH en la VM')
   }
   environment {    
     VM_USER = "azureuser"     
-    VM_SSH_KEY = credentials("ssh-key-azure") 
+    VM_SSH_KEY = credentials("ssh-key-vm") 
     FRONT_BUILD_DIR = "dist"  
     REMOTE_DIR = "/var/www/html"
   }
