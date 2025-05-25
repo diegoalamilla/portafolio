@@ -26,17 +26,18 @@ pipeline {
 
     stage('Deploy Frontend') {
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: SSH_KEY_CRED_ID, keyFileVariable: 'SSH_KEY', usernameVariable: 'azureuser')]) {
+        withCredentials([file(credentialsId: 'SSH-KEY', variable: 'SSH_KEY_FILE')]) { {
           // Copiar archivos con scp
           sh """
+            chmod 600 $SSH_KEY_FILE
             echo 'Copiando archivos build al servidor...'
-            scp -i ${SSH_KEY} -o StrictHostKeyChecking=no -r ${FRONT_BUILD_DIR}/* ${VM_USER}@${VM_IP}:/tmp/frontend_build/
+            scp -i $SSH_KEY_FILE -o StrictHostKeyChecking=no -r ${FRONT_BUILD_DIR}/* ${VM_USER}@${VM_IP}:/tmp/frontend_build/
           """
 
           // Mover los archivos en el servidor a la carpeta final
           sh """
             echo 'Moviendo archivos en el servidor remoto...'
-            ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
+            ssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
               mkdir -p ${REMOTE_PATH}
               rm -rf ${REMOTE_PATH}/*
               mv /tmp/frontend_build/* ${REMOTE_PATH}/
