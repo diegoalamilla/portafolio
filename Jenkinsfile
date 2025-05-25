@@ -36,13 +36,18 @@ pipeline {
     
             sh '''
               echo "Moviendo archivos en el servidor remoto..."
-              ssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
-                mkdir -p ${REMOTE_PATH}
-                rm -rf ${REMOTE_PATH}/*
-                mv /tmp/frontend_build/* ${REMOTE_PATH}/
-                rm -rf /tmp/frontend_build
-                echo "Despliegue finalizado."
-                sudo systemctl restart nginx
+              sssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
+                REMOTE_PATH="${REMOTE_PATH:-/var/www/html}"
+                if [[ "\$REMOTE_PATH" == /var/www/html* ]]; then
+                  rm -rf "\$REMOTE_PATH"/*
+                  mv /tmp/frontend_build/* "\$REMOTE_PATH"/
+                  rm -rf /tmp/frontend_build
+                  echo "Despliegue finalizado."
+                  sudo systemctl restart nginx
+                else
+                  echo "ERROR: REMOTE_PATH inseguro o no permitido"
+                  exit 1
+                fi
               '
             '''
           }
