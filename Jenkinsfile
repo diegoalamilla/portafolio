@@ -22,7 +22,7 @@ pipeline {
     stage("Transferir Archivos por SCP") {
       steps {
         echo "🚀 Transferir build a la VM"
-        sshagent (credentials: ['ssh-key-jenkins']) {
+        sshagent (credentials: ['ssh-key-vm']) {
           sh """
             scp -o StrictHostKeyChecking=no -r ${FRONT_BUILD_DIR}/* ${VM_USER}@${VM_IP}:${REMOTE_DIR}/
           """
@@ -33,7 +33,7 @@ pipeline {
     stage("Configurar Nginx") {
       steps {
         echo "🔧 Reiniciar Nginx en la VM"
-        sshagent (credentials: ['ssh-key-jenkins']) {
+        sshagent (credentials: ['ssh-key-vm']) {
           sh """
             ssh -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
               sudo systemctl restart nginx
