@@ -1,42 +1,47 @@
 pipeline {
   agent any
 
-   parameters {
+  parameters{
     string(name: 'VM_IP', defaultValue: '', description: 'IP pública de la VM')
   }
-  environment {    
-    VM_USER = "azureuser"     
-    VM_SSH_KEY = credentials("ssh-key-vm") 
-    FRONT_BUILD_DIR = "dist"  
-    REMOTE_DIR = "/var/www/html"
+  
+  environment {
+    SSH_KEY_CRED_ID = 'ssh-key-vm'       // Credencial SSH en Jenkins          // IP o dominio del servidor remoto
+    VM_USER = 'azureuser'              // Usuario SSH del servidor
+    REMOTE_PATH = '/var/www/html'   
+    FRONT_BUILD_DIR = "dist"  // Ruta donde va el frontend en el servidor
   }
 
   stages {
-    stage("Build Frontend") {
+    stage('Build Frontend') {
       steps {
-        echo " Construyendo el Frontend"
-        sh "npm install && npm run build"
+        echo 'Construyendo frontend...'
+        sh '''
+          # Aquí tu build real, ejemplo:
+          npm install
+          npm run build
+        '''
       }
     }
 
-    stage("Transferir Archivos por SCP") {
+    stage('Deploy Frontend') {
       steps {
-        echo "🚀 Transferir build a la VM"
-        sshagent (credentials: ['ssh-key-vm']) {
+        withCredentials([sshUserPrivateKey(credentialsId: SSH_KEY_CRED_ID, keyFileVariable: 'SSH_KEY', usernameVariable: 'azureuser')]) {
+          // Copiar archivos con scp
           sh """
-            scp -o StrictHostKeyChecking=no -r ${FRONT_BUILD_DIR}/* ${VM_USER}@${VM_IP}:${REMOTE_DIR}/
+            echo 'Copiando archivos build al servidor...'
+            scp -i ${SSH_KEY} -o StrictHostKeyChecking=no -r ${FRONT_BUILD_DIR}/* ${SSH_USER}@${REMOTE_HOST}:/tmp/frontend_build/
           """
-        }
-      }
-    }
 
-    stage("Configurar Nginx") {
-      steps {
-        echo "🔧 Reiniciar Nginx en la VM"
-        sshagent (credentials: ['ssh-key-vm']) {
+          // Mover los archivos en el servidor a la carpeta final
           sh """
-            ssh -o StrictHostKeyChecking=no ${VM_USER}@${VM_IP} '
-              sudo systemctl restart nginx
+            echo 'Moviendo archivos en el servidor remoto...'
+            ssh -i ${SSH_KEY} -o StrictHostKeyChecking=no ${SSH_USER}@${REMOTE_HOST} '
+              mkdir -p ${REMOTE_PATH}
+              rm -rf ${REMOTE_PATH}/*
+              mv /tmp/frontend_build/* ${REMOTE_PATH}/
+              rm -rf /tmp/frontend_build
+              echo "Despliegue finalizado."
             '
           """
         }
@@ -46,10 +51,10 @@ pipeline {
 
   post {
     success {
-      echo "✅ Despliegue completado"
+      echo 'Despliegue completado exitosamente 🎉'
     }
     failure {
-      echo "❌ Falló el despliegue"
+      echo 'Error en el despliegue'
     }
   }
 }
