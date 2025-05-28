@@ -18,7 +18,7 @@ pipeline {
     post {
         success {
             // Llamada al siguiente pipeline
-            build job: 'deploy-pipeline', // Cambia por el nombre real de tu pipeline de deploy
+            build job: 'frontend-deploy-test', // Cambia por el nombre real de tu pipeline de deploy
                 wait: false, // Opcional, si quieres que sea asíncrono
                  string(name: 'VM_IP', value: '172.174.81.81') // o cualquier IP
         }
