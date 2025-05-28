@@ -12,8 +12,8 @@ pipeline {
     stage('Deploy to VM') {
       steps {
         withCredentials([file(credentialsId: 'azure-ssh-key', variable: 'VM_SSH_KEY_PATH')]) {
+          sh 'chmod 600 $VM_SSH_KEY_PATH'
           sh """
-            chmod 600 $VM_SSH_KEY_PATH
             echo "put -r ${PATH_TO_COPY}/*" | sftp -o StrictHostKeyChecking=no -i $VM_SSH_KEY_PATH -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH}
           """
         }
