@@ -12,6 +12,8 @@ pipeline {
   stages {
     stage('Deploy to VM') {
       steps {
+         copyArtifacts(projectName: 'frontend-build-test', filter: 'dist/**', fingerprintArtifacts: true)
+
         sh '''
          echo "Mostrando contenido antes del deploy"
             ls -la

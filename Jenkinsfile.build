@@ -9,11 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm run build'
-                    sh '''
-                    echo "Verificando que se creó dist"
-                    ls -la
-                    ls -la dist
-                    '''
+                archiveArtifacts artifacts: 'dist/**', fingerprint: true
             }
         }
     }
