@@ -6,12 +6,11 @@ pipeline {
     stages {
         stage('Install dependencies') {
             steps {
-                sh 'npm install'
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'npm run build'
+               sh '''
+                # Aquí tu build real, ejemplo:
+                npm install
+                npm run build
+                '''
             }
         }
     }
