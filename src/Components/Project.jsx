@@ -22,7 +22,6 @@ function Project({name, description, repo_url, technologies}) {
        
         <div className= "project-links">
             <a href={repo_url} target='_blank'><img className= "repolink" src="/github-logo.webp" alt=""  /></a>
-            <a href='' target='_blank' > <img src= '/toanotherpage.png'></img></a>
         </div>
     </div>
     );

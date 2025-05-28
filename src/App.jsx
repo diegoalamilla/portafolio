@@ -13,7 +13,7 @@ function App() {
       <ul className="navbar-links">
         <li><a href="#hero">Inicio</a></li>
         <li><a href="#projects">Proyectos</a></li>
-        <li><a href="#contact">Contacto</a></li>
+        <li><a href="mailto:diego.alamilla123@gmail.com">Contacto</a></li>
       </ul>
     </nav>
 
