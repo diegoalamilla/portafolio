@@ -10,12 +10,13 @@ pipeline {
             steps {
                 sh 'npm run build'
                 sh 'tar czf dist.tar.gz dist'
-                archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
+               
             }
         }
     }
     post {
         success {
+            archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
             build(
                     job: 'frontend-deploy-test', // nombre del otro pipeline
                     parameters: [

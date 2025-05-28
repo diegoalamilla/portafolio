@@ -1,6 +1,6 @@
 pipeline {
-  agent any
-  parameters {
+    agent any
+    parameters {
     string(name: 'VM_IP', defaultValue: '', description: 'IP de la VM de destino')
   }
   environment {
@@ -9,21 +9,20 @@ pipeline {
     PATH_TO_COPY = 'dist'
     NGINX_PATH = '/var/www/html/'
   }
-  stages {
-    stage('Deploy to VM') {
+    stages {
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+    
+            }
+        }
+        stage('Deploy to VM') {
       steps {
-         copyArtifacts(
-          projectName: 'frontend-build-test',
-          selector: lastSuccessful(),
-          filter: 'dist.tar.gz'
-        )
-        sh 'tar xzf dist.tar.gz'
-
-        sh '''
-         echo "Mostrando contenido antes del deploy"
-            ls -la
-            ls -la dist
-            '''
           sh """
            cp "${SSH_FILE}" key.pem
             chmod 600 key.pem
@@ -32,5 +31,3 @@ pipeline {
         
       }
     }
-  }
-}
