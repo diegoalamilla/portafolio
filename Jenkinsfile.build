@@ -6,10 +6,12 @@ pipeline {
     stages {
         stage('Install dependencies') {
             steps {
-               sh '''
-                sh 'npm ci' // más seguro que "install" en CI
-                sh 'npx vite build'
-                '''
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
             }
         }
     }
