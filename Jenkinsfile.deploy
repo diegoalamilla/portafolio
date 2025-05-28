@@ -6,7 +6,7 @@ pipeline {
   environment {
     SSH_FILE = credentials('azure-ssh-key')
     VM_USER = 'azureuser'
-    PATH_TO_COPY = 'dist/'
+    PATH_TO_COPY = 'dist'
     NGINX_PATH = '/var/www/html/'
   }
   stages {
