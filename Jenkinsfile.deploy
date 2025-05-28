@@ -17,18 +17,13 @@ pipeline {
           selector: lastSuccessful(),
           filter: 'dist.tar.gz'
         )
-        sh 'tar xzf dist.tar.gz'
-
-        sh '''
-         echo "Mostrando contenido antes del deploy"
-            ls -la
-            ls -la dist
-            '''
           sh """
            cp "${SSH_FILE}" key.pem
             chmod 600 key.pem
-            echo "put -r ${PATH_TO_COPY}" | sftp -o StrictHostKeyChecking=no -i key.pem -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH}
-          """
+            sh
+            scp -i key.pem dist.tar.gz ${VM_USER}@${params.VM_IP}:/tmp/
+            ssh -i key.pem ${VM_USER}@${params.VM_IP} 'sudo tar xzf /tmp/dist.tar.gz -C /var/www/html/'
+            """
         
       }
     }
