@@ -4,6 +4,7 @@ pipeline {
     string(name: 'VM_IP', defaultValue: '', description: 'IP de la VM de destino')
   }
   environment {
+    SSH_FILE = credentials('azure-ssh-key')
     VM_USER = 'azureuser'
     PATH_TO_COPY = 'dist/'
     NGINX_PATH = '/var/www/html/'
@@ -11,12 +12,14 @@ pipeline {
   stages {
     stage('Deploy to VM') {
       steps {
-        withCredentials([file(credentialsId: 'azure-ssh-key', variable: 'VM_SSH_KEY_PATH')]) {
-          sh 'chmod 600 $VM_SSH_KEY_PATH'
+
+         
           sh """
-            echo "put -r ${PATH_TO_COPY}/*" | sftp -o StrictHostKeyChecking=no -i $VM_SSH_KEY_PATH -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH}
+           cp "${SSH_FILE}" key.pem
+            chmod 600 key.pem
+            echo "put -r ${PATH_TO_COPY}/*" | sftp -o StrictHostKeyChecking=no -i key.pem -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH}
           """
-        }
+        
       }
     }
   }
