@@ -9,7 +9,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm run build'
-                archiveArtifacts artifacts: 'dist/**', fingerprint: true
+                sh 'tar czf dist.tar.gz dist'
+                archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
             }
         }
     }
