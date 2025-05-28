@@ -20,10 +20,20 @@ pipeline {
           sh """
            cp "${SSH_FILE}" key.pem
             chmod 600 key.pem
-            sh
             scp -i key.pem dist.tar.gz ${VM_USER}@${params.VM_IP}:/tmp/
             ssh -i key.pem ${VM_USER}@${params.VM_IP} 'sudo tar xzf /tmp/dist.tar.gz -C /var/www/html/'
             """
+
+            sh """
+            ssh -i key.pem ${VM_USER}@${params.VM_IP} '
+              echo "Contenido en /tmp:";
+              ls -la /tmp/dist;
+              
+              echo "Contenido en /var/www/html/:";
+              ls -la /var/www/html/
+            '
+            """
+
         
       }
     }
