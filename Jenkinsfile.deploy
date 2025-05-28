@@ -17,7 +17,7 @@ pipeline {
           sh """
            cp "${SSH_FILE}" key.pem
             chmod 600 key.pem
-            echo "put -r ${PATH_TO_COPY}/*" | sftp -o StrictHostKeyChecking=no -i key.pem -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH}
+            echo "put -r ${PATH_TO_COPY}" | sftp -o StrictHostKeyChecking=no -i key.pem -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH}
           """
         
       }
