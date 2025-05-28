@@ -1,7 +1,7 @@
 pipeline {
   agent any
   parameters {
-    string(name: 'VM_IP', defaultValue: '', description: 'IP de la VM de destino')
+    string(name: 'VM_IP', defaultValue: '172.174.81.81', description: 'IP de la VM de destino')
   }
   environment {
     SSH_FILE = credentials('azure-ssh-key')

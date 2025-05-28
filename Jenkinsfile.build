@@ -17,13 +17,6 @@ pipeline {
     post {
         success {
             archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
-            build(
-                    job: 'frontend-deploy-test', // nombre del otro pipeline
-                    parameters: [
-                    string(name: 'VM_IP', value: '172.174.81.81')
-                    ],
-                    wait: true // espera a que termine antes de continuar
-                )
         }
     }
 }
