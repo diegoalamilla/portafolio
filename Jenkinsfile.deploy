@@ -14,8 +14,9 @@ pipeline {
       steps {
         sshagent(credentials: ['SSH_PRIVATE_KEY_ID']) {
           sh """
-          sftp -o StrictHostKeyChecking=no -i ${VM_SSH_KEY} -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH} <<< $'put -r ${PATH_TO_COPY}/*'
-          """
+          echo "put -r ${PATH_TO_COPY}/*" | sftp -o StrictHostKeyChecking=no -i ${VM_SSH_KEY} -r ${VM_USER}@${params.VM_IP}:${NGINX_PATH}
+            """
+
         }
       }
     }
