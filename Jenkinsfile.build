@@ -7,9 +7,8 @@ pipeline {
         stage('Install dependencies') {
             steps {
                sh '''
-                # Aquí tu build real, ejemplo:
-                npm install
-                npm run build
+                sh 'npm ci' // más seguro que "install" en CI
+                sh 'npx vite build'
                 '''
             }
         }
