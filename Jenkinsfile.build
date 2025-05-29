@@ -1,14 +1,20 @@
 pipeline {
     agent any
+    parameters {
+    string(name: 'FLEET_MASTER_MAIN_URL', defaultValue: '', description: 'URL de la API para el build')
+    string(name: 'FLEET_MASTER_AUTH_URL', defaultValue: '', description: 'URL de la API para el build')
+    }
     environment {
-        FLEET_MASTER_MAIN_URL = 'https://tu-ngrok-url.ngrok.io' // o puedes pasarlo como parámetro
+        FLEET_MASTER_MAIN_URL = "${params.FLEET_MASTER_MAIN_URL}"
+        FLEET_MASTER_AUTH_URL = "${params.FLEET_MASTER_AUTH_URL}"
     }
     stages {
         stage('Prepare .env') {
             steps {
                 // Reemplaza la línea VITE_API_URL=... con el valor real
                 sh """
-                    sed -i 's|VITE_API_URL=.*|VITE_API_URL=${FLEET_MASTER_MAIN_URL}|' .env
+                    sed -i 's|VITE_API_MAIN_URL=.*|VITE_API_MAIN_URL=${FLEET_MASTER_MAIN_URL}|' .env
+                    sed -i 's|VITE_API_AUTH_URL=.*|VITE_API_AUTH_URL=${FLEET_MASTER_AUTH_URL}|' .env
                     echo "Contenido de .env actualizado:"
                     cat .env
                 """
