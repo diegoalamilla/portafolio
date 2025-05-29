@@ -10,23 +10,27 @@ pipeline {
     NGINX_PATH = '/var/www/html/'
   }
   stages {
+    stage('Copy Artifacts from build'){
+      steps{
+            copyArtifacts(
+              projectName: 'frontend-build-test',
+              selector: lastSuccessful(),
+              filter: 'dist.tar.gz'
+            )
+      }
+    }
     stage('Deploy to VM') {
       steps {
-         copyArtifacts(
-          projectName: 'frontend-build-test',
-          selector: lastSuccessful(),
-          filter: 'dist.tar.gz'
-        )
-          sh """
-           cp "${SSH_FILE}" key.pem
-            chmod 600 key.pem
-            scp -i key.pem dist.tar.gz ${VM_USER}@${params.VM_IP}:/tmp/
-            ssh -i key.pem ${VM_USER}@${params.VM_IP} '
-              sudo tar xzf /tmp/dist.tar.gz;
-              sudo cp -r dist/* ${NGINX_PATH}
-            '
-            """
-      }
+        sh """
+          cp "${SSH_FILE}" key.pem
+          chmod 600 key.pem
+          scp -i key.pem dist.tar.gz ${VM_USER}@${params.VM_IP}:/tmp/
+          ssh -i key.pem ${VM_USER}@${params.VM_IP} '
+            sudo tar xzf /tmp/dist.tar.gz;
+            sudo cp -r dist/* ${NGINX_PATH}
+          '
+          """
+      } 
     }
   }
   post{

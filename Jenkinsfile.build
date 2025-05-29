@@ -1,6 +1,19 @@
 pipeline {
     agent any
+    environment {
+        FLEET_MASTER_MAIN_URL = 'https://tu-ngrok-url.ngrok.io' // o puedes pasarlo como parámetro
+    }
     stages {
+        stage('Prepare .env') {
+            steps {
+                // Reemplaza la línea VITE_API_URL=... con el valor real
+                sh """
+                    sed -i 's|VITE_API_URL=.*|VITE_API_URL=${FLEET_MASTER_MAIN_URL}|' .env
+                    echo "Contenido de .env actualizado:"
+                    cat .env
+                """
+            }
+        }
         stage('Install dependencies') {
             steps {
                 sh 'npm install'
@@ -10,7 +23,6 @@ pipeline {
             steps {
                 sh 'npm run build'
                 sh 'tar czf dist.tar.gz dist'
-               
             }
         }
     }
@@ -18,12 +30,12 @@ pipeline {
         success {
             archiveArtifacts artifacts: 'dist.tar.gz', fingerprint: true
             build(
-                    job: 'frontend-deploy-test', // nombre del otro pipeline
-                    parameters: [
+                job: 'frontend-deploy-test',
+                parameters: [
                     string(name: 'VM_IP', value: '172.174.81.81')
-                    ],
-                    wait: false // espera a que termine antes de continuar
-                )
+                ],
+                wait: false
+            )
         }
     }
 }
